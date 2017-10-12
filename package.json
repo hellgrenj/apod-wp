@@ -1,0 +1,24 @@
+{
+  "name": "apod-wp",
+  "version": "1.0.0",
+  "description": "a simple cli tool that fetches the latest high resolution APOD (Astronomy Picture Of the Day) from NASA, writes the explanation (written by a professional astronomer) on the image and sets it as your desktop wallpaper. works on windows, linux and mac.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Johan Hellgren <hellgrenj@gmail.com> (johanhellgren.se)",
+  "license": "MIT",
+  "bin": {
+    "apodwp": "./index.js"
+  },
+  "preferGlobal": true,
+  "dependencies": {
+    "chalk": "2.1.0",
+    "clear": "0.0.1",
+    "jimp": "0.2.28",
+    "ora": "1.3.0",
+    "shelljs": "0.7.8",
+    "superagent": "3.6.3",
+    "wallpaper": "2.5.0"
+  }
+}
