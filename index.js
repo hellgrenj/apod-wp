@@ -18,6 +18,10 @@ spinner.on('message', (msg) => {
     console.log(chalk.bgGreen('\nall done, enjoy your fresh APOD!'))
     process.exit(0)
   }
+  if (msg.signal === 'we have failed') {
+    console.log(chalk.bgRed('\n.... eehhmm ...well thats embarrassing.. im sorry!'))
+    process.exit(1)
+  }
 })
 
 const API_KEY = process.argv[2] || 'DEMO_KEY'
@@ -39,5 +43,4 @@ request
   .then(imageHandler.setAsWallpaper)
   .catch(err => {
     spinner.send({ type: 'fail', text: `failed with error ${err}` })
-    process.exit(1)
   })

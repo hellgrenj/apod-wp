@@ -15,6 +15,7 @@ process.on('message', msg => {
       break
     case 'fail':
       _spinner.fail(msg.text)
+      process.send({signal: 'we have failed'})
       break
     case 'succeed':
       _spinner.succeed(msg.text)
