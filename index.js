@@ -42,5 +42,5 @@ request
   .then(imageHandler.addText)
   .then(imageHandler.setAsWallpaper)
   .catch(err => {
-    spinner.send({ type: 'fail', text: `failed with error ${err}` })
+    spinner.send({ type: 'fail', text: `failed with ${err}` })
   })

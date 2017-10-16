@@ -16,6 +16,11 @@ imageHandler.get = function ({ image, spinner }) {
   const step = 'fetching high resolution APOD'
   spinner.send({ type: 'text', text: step, color: 'cyan' })
   return new Promise((resolve, reject) => {
+    if (image.media_type !== 'image') {
+      throw new Error(
+        'Hmm its not an image so I cant really turn this into a wallpaper for you! Better luck tomorrow I guess?'
+      )
+    }
     const arr = image.hdurl.split('/')
     const imageName = arr[arr.length - 1]
     image.path = path.join(imageHandler.basePath, imageName)
@@ -33,21 +38,31 @@ imageHandler.get = function ({ image, spinner }) {
   })
 }
 
-imageHandler.addText = function ({image, spinner}) {
+imageHandler.addText = function ({ image, spinner }) {
   const step = 'writing text to image'
   spinner.send({ type: 'text', text: step, color: 'yellow' })
   return new Promise((resolve, reject) => {
     Jimp.read(image.path, function (err, jimg) {
       if (err) return reject(err)
-      Jimp.loadFont(getFont(jimg)).then(function (font) {
-        let textOnImage = `${image.date} : ${image.explanation}`
-        if (image.copyright) { textOnImage += ` copyright ${image.copyright}` }
-        jimg.print(font, getX(jimg), getY(jimg), textOnImage, getTextWidth(jimg))
-        jimg.write(image.path, () => {
-          spinner.send({ type: 'succeed', text: step })
-          return resolve({image, spinner})
+      Jimp.loadFont(getFont(jimg))
+        .then(function (font) {
+          let textOnImage = `${image.date} : ${image.explanation}`
+          if (image.copyright) {
+            textOnImage += ` copyright ${image.copyright}`
+          }
+          jimg.print(
+            font,
+            getX(jimg),
+            getY(jimg),
+            textOnImage,
+            getTextWidth(jimg)
+          )
+          jimg.write(image.path, () => {
+            spinner.send({ type: 'succeed', text: step })
+            return resolve({ image, spinner })
+          })
         })
-      }).catch(err => reject(err))
+        .catch(err => reject(err))
     })
   })
 }
