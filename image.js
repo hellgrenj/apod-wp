@@ -21,9 +21,9 @@ imageHandler.get = function ({ image, spinner }) {
         'Hmm its not an image so I cant really turn this into a wallpaper for you! Better luck tomorrow I guess?'
       )
     }
-    const arr = image.hdurl.split('/')
-    const imageName = arr[arr.length - 1]
-    image.path = path.join(imageHandler.basePath, imageName)
+    // const arr = image.hdurl.split('/')
+    // const imageName = arr[arr.length - 1]
+    image.path = path.join(imageHandler.basePath, 'latest.jpg')
     const stream = fs.createWriteStream(image.path)
     request
       .get(image.hdurl)
